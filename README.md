@@ -9,6 +9,7 @@ Once we have our database and application up and running, we will install and co
 
 Let’s get started.
 
+# Manual Install #
 ### Installing the Packages from the Ubuntu Repositories
 
 To begin the process, we’ll download and install all of the items we need from the Ubuntu repositories. We will use the Python package manager pip to install additional components a bit later.
@@ -318,8 +319,8 @@ systemctl status gunicorn_recipes.service
 
 
 
-
-
+### Resources VM
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
 
 ### Creating a Ubuntu VM
 - https://www.unbxtech.com/2020/04/howto-create-vm-freenas-11.html
