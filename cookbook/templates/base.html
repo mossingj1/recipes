@@ -13,20 +13,25 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/favicon.svg' %}">
     <link rel="shortcut icon" href="{% static 'assets/favicon.svg' %}">
-    <link rel="icon" type="image/png" href="{% static 'assets/favicon.svg' %}" sizes="32x32">
-    <link rel="icon" type="image/png" href="{% static 'assets/favicon.svg' %}" sizes="96x96">
-    <link rel="apple-touch-icon" href="{% static 'assets/favicon.svg' %}">  
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon.svg' %}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'assets/favicon.svg' %}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon.svg' %}">
-    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'assets/favicon.svg' %}">
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon-32x32.png' %}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon-16x16.png' %}" sizes="16x16">
+
+    <link rel="mask-icon" href="{% static 'assets/safari-pinned-tab.svg' %}" color="#161616">
+    <link rel="apple-touch-icon" href="{% static 'assets/apple-touch-icon.png' %}" sizes="180x180">
 
     <link rel="manifest" href="{% url 'web_manifest' %}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 
+
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#161616">
+    <meta name="msapplication-TileColor" content="#161616">
+    <meta name="theme-color" content="#ffffff">
+
+
     <!-- Bootstrap 4 -->
     <link id="id_main_css" href="{% theme_url request %}" rel="stylesheet">
+    <link href="{% static 'css/app.min.css' %}" rel="stylesheet">
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
 
     <script src="{% static 'js/popper.min.js' %}"></script>
@@ -54,12 +59,18 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-{% nav_color request %}" id="id_main_nav"
-     style="{% sticky_nav request %}">
+<nav class="navbar navbar-expand-lg navbar-dark bg-{% nav_color request %} bg-header" id="id_main_nav"
+     style="{% sticky_nav request %}; z-index: 1061">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
+    {% if not request.user.is_authenticated or request.user.userpreference.theme == request.user.userpreference.TANDOOR %}
+    <a class="navbar-brand p-0 me-2 justify-content-center" href="/" aria-label="Tandoor">
+         <img class="brand-icon" src="{% static 'assets/brand_logo.png' %}" alt="" style="height: 5vh;">
+    </a>
+    {% endif %}
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item {% if request.resolver_match.url_name in 'view_search,edit_recipe,edit_internal_recipe,edit_external_recipe,view_recipe,data_import_url' %}active{% endif %}">
@@ -117,7 +128,7 @@
                             class="fas fa-chart-line fa-fw"></i> {% trans 'Statistics' %}</a>
                     <a class="dropdown-item" href="{% url 'edit_food' %}"><i
                             class="fas fa-balance-scale fa-fw"></i> {% trans 'Units & Ingredients' %}</a>
-                    <a class="dropdown-item" href="{% url 'view_import' %}"><i
+                    <a class="dropdown-item" href="{% url 'data_import_url' %}"><i
                             class="fas fa-file-import"></i> {% trans 'Import Recipe' %}</a>
 
                 </div>
@@ -129,7 +140,7 @@
                 {% page_help request.resolver_match.url_name as help_button %}
                 {% if help_button %}{{ help_button|safe }}{% endif %}
 
-                <li class="nav-item dropdown {% if request.resolver_match.url_name in 'view_settings,view_history,view_system,docs_markdown' %}active{% endif %}">
+                <li class="nav-item dropdown {% if request.resolver_match.url_name in 'view_space,view_settings,view_history,view_system,docs_markdown' %}active{% endif %}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false"><i
                             class="fas fa-user-alt"></i> {{ user.get_user_name }}
@@ -140,6 +151,9 @@
                                 class="fas fa-user-cog fa-fw"></i> {% trans 'Settings' %}</a>
                         <a class="dropdown-item" href="{% url 'view_history' %}"><i
                                 class="fas fa-history"></i> {% trans 'History' %}</a>
+                        {% if request.user == request.space.created_by %}
+                            <a class="dropdown-item" href="{% url 'view_space' %}"><i class="fas fa-server fa-fw"></i> {% trans 'Space Settings' %}</a>
+                        {% endif %}
                         {% if user.is_superuser %}
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'view_system' %}"><i
@@ -158,12 +172,13 @@
                                 class="fas fa-file-code fa-fw"></i> {% trans 'API Browser' %}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'account_logout' %}"><i
-                                class="fas fa-sign-out-alt fa-fw"></i> {% trans 'Logout' %}</a>
+                                class="fas fa-sign-out-alt fa-fw"></i> {% trans 'Log out' %}</a>
                     </div>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account_logout' %}">{% trans 'Login' %} <i class="fas fa-sign-in-alt"></i></a>
+                    <a class="nav-link" href="{% url 'account_login' %}">{% trans 'Login' %} <i
+                            class="fas fa-sign-in-alt"></i></a>
                 </li>
             {% endif %}
         </ul>
@@ -223,7 +238,7 @@
 <script type="application/javascript">
     window.addEventListener("load", () => {
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("{% url 'service_worker' %}", { scope: '/' }).then(function (reg) {
+            navigator.serviceWorker.register("{% url 'service_worker' %}", {scope: '/'}).then(function (reg) {
 
             }).catch(function (err) {
                 console.warn('Error whilst registering service worker', err);

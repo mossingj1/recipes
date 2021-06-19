@@ -1,5 +1,8 @@
+import re
 import string
 import unicodedata
+
+from cookbook.models import Unit, Food
 
 
 def parse_fraction(x):
@@ -23,17 +26,12 @@ def parse_amount(x):
 
     did_check_frac = False
     end = 0
-    while (
-            end < len(x)
-            and (
-                    x[end] in string.digits
-                    or (
-                            (x[end] == '.' or x[end] == ',' or x[end] == '/')
-                            and end + 1 < len(x)
-                            and x[end + 1] in string.digits
-                    )
-            )
-    ):
+    while (end < len(x) and (x[end] in string.digits
+                             or (
+                                     (x[end] == '.' or x[end] == ',' or x[end] == '/')
+                                     and end + 1 < len(x)
+                                     and x[end + 1] in string.digits
+                             ))):
         end += 1
     if end > 0:
         if "/" in x[:end]:
@@ -53,6 +51,9 @@ def parse_amount(x):
                 unit = x[end + 1:]
             except ValueError:
                 unit = x[end:]
+
+    if unit.startswith('('):  # i dont know any unit that starts with ( so its likely an alternative like 1L (500ml) Water
+        unit = ''
     return amount, unit
 
 
@@ -105,6 +106,12 @@ def parse(x):
     ingredient = ''
     note = ''
 
+    # if the string contains parenthesis early on remove it and place it at the end
+    # because its likely some kind of note
+    if re.match('(.){1,6}\s\((.[^\(\)])+\)\s', x):
+        match = re.search('\((.[^\(])+\)', x)
+        x = x[:match.start()] + x[match.end():] + ' ' + x[match.start():match.end()]
+
     tokens = x.split()
     if len(tokens) == 1:
         # there only is one argument, that must be the ingredient
@@ -113,16 +120,17 @@ def parse(x):
         try:
             # try to parse first argument as amount
             amount, unit = parse_amount(tokens[0])
+            print('test', unit)
             # only try to parse second argument as amount if there are at least
             # three arguments if it already has a unit there can't be
             # a fraction for the amount
             if len(tokens) > 2:
                 try:
                     if not unit == '':
-                        # a unit is already found, no need to try the second argument for a fraction  # noqa: E501
+                        # a unit is already found, no need to try the second argument for a fraction
                         # probably not the best method to do it, but I didn't want to make an if check and paste the exact same thing in the else as already is in the except  # noqa: E501
                         raise ValueError
-                    # try to parse second argument as amount and add that, in case of '2 1/2' or '2 ½'  # noqa: E501
+                    # try to parse second argument as amount and add that, in case of '2 1/2' or '2 ½'
                     amount += parse_fraction(tokens[1])
                     # assume that units can't end with a comma
                     if len(tokens) > 3 and not tokens[2].endswith(','):
@@ -140,7 +148,10 @@ def parse(x):
                         # try to use second argument as unit and everything else as ingredient, use everything as ingredient if it fails  # noqa: E501
                         try:
                             ingredient, note = parse_ingredient(tokens[2:])
-                            unit = tokens[1]
+                            if unit == '':
+                                unit = tokens[1]
+                            else:
+                                note = tokens[1]
                         except ValueError:
                             ingredient, note = parse_ingredient(tokens[1:])
                     else:
@@ -157,3 +168,22 @@ def parse(x):
             except ValueError:
                 ingredient = ' '.join(tokens[1:])
     return amount, unit.strip(), ingredient.strip(), note.strip()
+
+
+# small utility functions to prevent emtpy unit/food creation
+def get_unit(unit, space):
+    if not unit:
+        return None
+    if len(unit) > 0:
+        u, created = Unit.objects.get_or_create(name=unit, space=space)
+        return u
+    return None
+
+
+def get_food(food, space):
+    if not food:
+        return None
+    if len(food) > 0:
+        f, created = Food.objects.get_or_create(name=food, space=space)
+        return f
+    return None

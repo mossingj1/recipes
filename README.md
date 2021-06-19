@@ -409,6 +409,10 @@ git clone https://github.com/vabene1111/recipes.git -b master
 
 ![Preview](docs/preview.png)
 
+# Your Feedback
+
+Share some information on how you use Tandoor to help me improve the application [Google Survey](https://forms.gle/qNfLK2tWTeWHe9Qd7)
+
 ## Features
 
 - 📦 **Sync** files with Dropbox and Nextcloud (more can easily be added)
