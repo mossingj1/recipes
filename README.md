@@ -10,29 +10,50 @@ Once we have our database and application up and running, we will install and co
 Let’s get started.
 
 # Docker Install #
+## Step 1 — Installing Docker ##
 First, update your existing list of packages:
 ``` 
 sudo apt update
  ```
 Next, install a few prerequisite packages which let apt use packages over HTTPS:
-``` shell script
+```
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
  ```
 Then add the GPG key for the official Docker repository to your system:
-
+```
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
- 
+ ```
 Add the Docker repository to APT sources:
-
+```
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
- 
+ ```
 Next, update the package database with the Docker packages from the newly added repo:
-
+```
 sudo apt update
- 
+ ```
 Make sure you are about to install from the Docker repo instead of the default Ubuntu repo:
-
+```
 apt-cache policy docker-ce
+```
+Finally, install Docker:
+```
+sudo apt install docker-ce
+ ```
+Docker should now be installed, the daemon started, and the process enabled to start on boot. Check that it’s running:
+```
+sudo systemctl status docker
+```
+
+## Step 2 — Installing Portainer ##
+We now need to create an area for Portainer to have data.
+ ```
+sudo mkdir /portainer
+sudo mkdir /portainer/data
+ ```
+Now we will do a Docker run Portainer
+ ```
+sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always --pull=always -v /var/run/docker.sock:/var/run/docker.sock -v /portainer/data:/data portainer/portainer-ce
+ ```
 # Manual Install #
 ### Installing the Packages from the Ubuntu Repositories
 
