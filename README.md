@@ -19,14 +19,37 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 >* Name: UBUDocker (or whatever you want it to be)
 >* System Clock: Local
 >* Boot method: UEFI
->* Shutdown time: 90
 >* Start on boot enabled
 >* Enable VNC enabled
+>* Bind: 0.0.0.0
 
 ![image](https://user-images.githubusercontent.com/52215012/122658774-2a6f1580-d13f-11eb-96e2-03bbcea0b565.png)
 
 2) CPU and Memory
-3
+>* Virtual CPUs: 2
+>* Memory Size: 4 GiB
+
+![image](https://user-images.githubusercontent.com/52215012/122658980-e2e98900-d140-11eb-93b0-256e533cfb9c.png)
+
+3) Disks
+>* Select "Use existing disk Image"
+>** You will use the Zvol created in Step 1
+>* Select Jail_V</UBUDocker
+
+![image](https://user-images.githubusercontent.com/52215012/122659017-35c34080-d141-11eb-93ac-361c7ab8915b.png)
+
+4) Network Interface
+>* Adaptor Type: VirtIO
+
+![image](https://user-images.githubusercontent.com/52215012/122659031-61462b00-d141-11eb-8a3b-1a2584c6a8cb.png)
+
+5) Instalation Method
+>*Choose instalation media image: Select location of Ubuntu image 
+>-/mnt/myVol/ShareDrive/09 - NAS/ubuntu-20.04-desktop-amd64.iso
+
+![image](https://user-images.githubusercontent.com/52215012/122659069-acf8d480-d141-11eb-91bc-90157440df0c.png)
+
+
 Pick the “Guest Operating System” as Linux and add a name.
 Name the VM and type in a description.
 Uncheck the “Start on Boot”, if you want to manually start the VM every time.
