@@ -58,12 +58,30 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 - https://getmethegeek.com/blog/2021-01-07-add-docker-capabilities-to-truenas-core/
    - https://www.youtube.com/watch?v=XBVjuwgz0Cg
 
-Click the toggle switch to start up the virtual machine. You can expand the tab to show more information and options. Hitting the “VNC” button will take you to the web viewer window, that allows you to remotely control and see the graphical output of the VM.
+
 
 ## Step 3 - Initial Server Setup Ubuntu 20.04 ##
+Now its time to setup Ubuntu. Go to "Virtual Machines" in FreeNAS and select the newly created VM.
 
+Click the toggle switch to start up the virtual machine. Then select the “VNC” button will take you to the web viewer window, that allows you to remotely control and see the graphical output of the VM. Continue using the VNC to set up Ubuntu on the VM.
 
+Select Language
+![image](https://user-images.githubusercontent.com/52215012/122659210-96537d00-d143-11eb-9bb0-96baedc9cc17.png)
 
+Keyboard Layout
+![image](https://user-images.githubusercontent.com/52215012/122659214-a4a19900-d143-11eb-8c45-5959770387e1.png)
+![image](https://user-images.githubusercontent.com/52215012/122659264-49bc7180-d144-11eb-8855-5e2317f6d2ed.png)
+
+Disconect Disk Drive
+
+### Logging in as root ###
+```
+ssh root@your_server_ip
+```
+### creating new user ###
+```
+adduser sammy
+```
 ## Prerequisites
 In order to complete this guide, you should have a fresh Ubuntu 20.04 server instance with a basic firewall and a non-root user with sudo privileges configured. You can learn how to set this up by running through our initial server setup guide.
 
