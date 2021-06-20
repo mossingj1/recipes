@@ -33,7 +33,7 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 
 3) Disks
 >- Select "Use existing disk Image"
->         - You will use the Zvol created in Step 1
+>   - You will use the Zvol created in Step 1
 >- Select Jail_V</UBUDocker
 
 ![image](https://user-images.githubusercontent.com/52215012/122659017-35c34080-d141-11eb-93ac-361c7ab8915b.png)
