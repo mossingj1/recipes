@@ -1,8 +1,7 @@
 # Getting Started
 
 # Ubuntu Server on FreeNAS VM #
-
-## Step 1 - Setting up Storage ##
+## Step 1 - Setting up Freenas Zvol ##
 First of all, a dedicated storage space will need to be allocated for the virtual machines. You should have already created a storage pool from one or more drives for file-sharing over the network. Add a new Zvol (ZFS volume) to the preferred pool by clicking the vertical ellipsis menu button (⋮).
 
 ![image](https://user-images.githubusercontent.com/52215012/122658673-2f7f9500-d13e-11eb-8cb2-c673d0d5afb6.png)
@@ -11,7 +10,7 @@ Specify the size of Zvol, after giving a name to it. Make sure the disk is large
 
 ![image](https://user-images.githubusercontent.com/52215012/122658692-51791780-d13e-11eb-8757-e7fff0670122.png)
 
-## Step 2 - Setting up VM ##
+## Step 2 - Setting up a VM ##
 Go to the “Virtual Machines” section and click “Add” to create a new VM. Use the settings detailed below.
 
 1) Operating System
@@ -58,12 +57,82 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 - https://getmethegeek.com/blog/2021-01-07-add-docker-capabilities-to-truenas-core/
    - https://www.youtube.com/watch?v=XBVjuwgz0Cg
 
-
-
-## Step 3 - Initial Server Setup Ubuntu 20.04 ##
 Now its time to setup Ubuntu. Go to "Virtual Machines" in FreeNAS and select the newly created VM.
 
 Click the toggle switch to start up the virtual machine. Then select the “VNC” button will take you to the web viewer window, that allows you to remotely control and see the graphical output of the VM. Continue using the VNC to set up Ubuntu on the VM.
+
+Once you are finished setting up Ubuntu go back to FreeNAS -> Virual Machines. Select the Virtual Machine ("UBUDocker") Disconect Disk Drive
+
+## Step 3 - Initial Server Setup Ubuntu 20.04 ##
+### Logging in as root ###
+Connect to your server by using your servers public IP address.
+```
+ssh root@your_server_ip
+```
+### Creating a New User ###
+Once you are logged in as root, we’re prepared to add the new user account. In the future, we’ll log in with this new account instead of root.
+
+This example creates a new user called sammy, but you should replace that with a username that you like:
+
+```
+adduser jcm
+```
+You will be asked a few questions, starting with the account password.
+
+Enter a strong password and, optionally, fill in any of the additional information if you would like. This is not required and you can just hit ENTER in any field you wish to skip.
+### Granting Administrative Privileges ###
+Now, we have a new user account with regular account privileges. However, we may sometimes need to do administrative tasks.
+
+To avoid having to log out of our normal user and log back in as the root account, we can set up what is known as superuser or root privileges for our normal account. This will allow our normal user to run commands with administrative privileges by putting the word sudo before each command.
+
+To add these privileges to our new user, we need to add the user to the sudo group. By default, on Ubuntu 20.04, users who are members of the sudo group are allowed to use the sudo command.
+
+As root, run this command to add your new user to the sudo group (substitute the highlighted username with your new user):
+
+```
+usermod -aG sudo jcm
+```
+Now, when logged in as your regular user, you can type sudo before commands to perform actions with superuser privileges.
+### Setting Up a Basic Firewall ###
+Ubuntu 20.04 servers can use the UFW firewall to make sure only connections to certain services are allowed. We can set up a basic firewall very easily using this application.
+Applications can register their profiles with UFW upon installation. These profiles allow UFW to manage these applications by name. OpenSSH, the service allowing us to connect to our server now, has a profile registered with UFW.
+
+You can see this by typing:
+
+```
+ufw app list
+```
+
+```
+Output
+Available applications:
+  OpenSSH
+```
+We need to make sure that the firewall allows SSH connections so that we can log back in next time. We can allow these connections by typing:
+```
+ufw allow OpenSSH
+```
+Afterwards, we can enable the firewall by typing:
+```
+ufw enable
+```
+Type y and press ENTER to proceed. You can see that SSH connections are still allowed by typing:
+```
+ufw status
+```
+```
+Output
+Status: active
+
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+```
+As the firewall is currently blocking all connections except for SSH, if you install and configure additional services, you will need to adjust the firewall settings to allow traffic in. You can learn some common UFW operations in our [UFW Essentials guide.](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
+
+
+
 
 Select Language
 ![image](https://user-images.githubusercontent.com/52215012/122659210-96537d00-d143-11eb-9bb0-96baedc9cc17.png)
@@ -72,16 +141,6 @@ Keyboard Layout
 ![image](https://user-images.githubusercontent.com/52215012/122659214-a4a19900-d143-11eb-8c45-5959770387e1.png)
 ![image](https://user-images.githubusercontent.com/52215012/122659264-49bc7180-d144-11eb-8855-5e2317f6d2ed.png)
 
-Disconect Disk Drive
-
-### Logging in as root ###
-```
-ssh root@your_server_ip
-```
-### creating new user ###
-```
-adduser sammy
-```
 ## Prerequisites
 In order to complete this guide, you should have a fresh Ubuntu 20.04 server instance with a basic firewall and a non-root user with sudo privileges configured. You can learn how to set this up by running through our initial server setup guide.
 
