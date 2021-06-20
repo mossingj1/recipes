@@ -1,5 +1,35 @@
 # Getting Started
 
+# Ubuntu Server on FreeNAS VM #
+
+## Step 1 - Setting up Storage ##
+First of all, a dedicated storage space will need to be allocated for the virtual machines. You should have already created a storage pool from one or more drives for file-sharing over the network. Add a new Zvol (ZFS volume) to the preferred pool by clicking the vertical ellipsis menu button (⋮).
+
+![image](https://user-images.githubusercontent.com/52215012/122658673-2f7f9500-d13e-11eb-8cb2-c673d0d5afb6.png)
+
+Specify the size of Zvol, after giving a name to it. Make sure the disk is larger than the minimum requirement of your installed OS. For example, Microsoft Windows 10 and Ubuntu Desktop will need at least 32 GB and 25 GB respectively.
+
+![image](https://user-images.githubusercontent.com/52215012/122658692-51791780-d13e-11eb-8757-e7fff0670122.png)
+
+## Step 2 - Setting up VM ##
+Go to the “Virtual Machines” section and click “Add” to create a new VM. Use the settings detailed below.
+
+1) Operating System
+- Guest operating system: Linux
+- Name: UBUDocker (or whatever you want it to be)
+- System Clock: Local
+- Boot method: UEFI
+- Shutdown time: 90
+- Start on boot enabled
+- Enable VNC enabled
+![image](https://user-images.githubusercontent.com/52215012/122658774-2a6f1580-d13f-11eb-96e2-03bbcea0b565.png)
+
+2) CPU and Memory
+3
+Pick the “Guest Operating System” as Linux and add a name.
+Name the VM and type in a description.
+Uncheck the “Start on Boot”, if you want to manually start the VM every time.
+
 ## Prerequisites
 In order to complete this guide, you should have a fresh Ubuntu 20.04 server instance with a basic firewall and a non-root user with sudo privileges configured. You can learn how to set this up by running through our initial server setup guide.
 
