@@ -49,10 +49,20 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 
 ![image](https://user-images.githubusercontent.com/52215012/122659069-acf8d480-d141-11eb-91bc-90157440df0c.png)
 
+6) Confirm Options
+>- Review and confirm options
 
-Pick the “Guest Operating System” as Linux and add a name.
-Name the VM and type in a description.
-Uncheck the “Start on Boot”, if you want to manually start the VM every time.
+*Resources*
+- https://www.youtube.com/watch?v=8oMAEBUOPQ0
+- https://www.unbxtech.com/2020/04/howto-create-vm-freenas-11.html
+- https://getmethegeek.com/blog/2021-01-07-add-docker-capabilities-to-truenas-core/
+   - https://www.youtube.com/watch?v=XBVjuwgz0Cg
+
+Click the toggle switch to start up the virtual machine. You can expand the tab to show more information and options. Hitting the “VNC” button will take you to the web viewer window, that allows you to remotely control and see the graphical output of the VM.
+
+## Step 3 - Initial Server Setup Ubuntu 20.04 ##
+
+
 
 ## Prerequisites
 In order to complete this guide, you should have a fresh Ubuntu 20.04 server instance with a basic firewall and a non-root user with sudo privileges configured. You can learn how to set this up by running through our initial server setup guide.
