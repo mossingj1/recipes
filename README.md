@@ -464,7 +464,11 @@ At this point, all you need to do is access Portainer portal to manage Docker. O
 
 http://localhost:9000
 
-
+### Resources ###
+- https://docs.fuga.cloud/how-to-install-portainer-docker-ui-manager-on-ubuntu-20.04-18.04-16.04
+- https://getmethegeek.com/blog/2020-04-20-installing-docker-and-portainer-on-proxmox/
+- https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+- docker system prune
 
 ### Next ###
 We now need to create an area for Portainer to have data.
