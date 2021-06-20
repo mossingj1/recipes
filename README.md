@@ -17,11 +17,11 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 1) Operating System
      * Guest operating system: Linux
  > - Name: UBUDocker (or whatever you want it to be)
- + System Clock: Local
- - Boot method: UEFI
- - Shutdown time: 90
- - Start on boot enabled
- - Enable VNC enabled
+    + System Clock: Local
+    + Boot method: UEFI
+    + Shutdown time: 90
+    + Start on boot enabled
+    * Enable VNC enabled
 ![image](https://user-images.githubusercontent.com/52215012/122658774-2a6f1580-d13f-11eb-96e2-03bbcea0b565.png)
 
 2) CPU and Memory
