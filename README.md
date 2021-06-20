@@ -33,7 +33,7 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 
 3) Disks
 >- Select "Use existing disk Image"
->  - You will use the Zvol created in Step 1
+>   - You will use the Zvol created in Step 1
 >- Select Jail_V</UBUDocker
 
 ![image](https://user-images.githubusercontent.com/52215012/122659017-35c34080-d141-11eb-93ac-361c7ab8915b.png)
@@ -44,8 +44,8 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 ![image](https://user-images.githubusercontent.com/52215012/122659031-61462b00-d141-11eb-8a3b-1a2584c6a8cb.png)
 
 5) Instalation Method
->*Choose instalation media image: Select location of Ubuntu image 
->  */mnt/myVol/ShareDrive/09 - NAS/ubuntu-20.04-desktop-amd64.iso
+>- Choose instalation media image: Select location of Ubuntu image 
+>   - /mnt/myVol/ShareDrive/09 - NAS/ubuntu-20.04-desktop-amd64.iso
 
 ![image](https://user-images.githubusercontent.com/52215012/122659069-acf8d480-d141-11eb-91bc-90157440df0c.png)
 
