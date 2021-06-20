@@ -15,9 +15,9 @@ Specify the size of Zvol, after giving a name to it. Make sure the disk is large
 Go to the “Virtual Machines” section and click “Add” to create a new VM. Use the settings detailed below.
 
 1) Operating System
-     - Guest operating system: Linux
+     * Guest operating system: Linux
  - Name: UBUDocker (or whatever you want it to be)
-     - System Clock: Local
+ - System Clock: Local
  - Boot method: UEFI
  - Shutdown time: 90
  - Start on boot enabled
