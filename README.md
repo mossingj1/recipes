@@ -45,7 +45,7 @@ Go to the “Virtual Machines” section and click “Add” to create a new VM.
 
 5) Instalation Method
 >*Choose instalation media image: Select location of Ubuntu image 
->-/mnt/myVol/ShareDrive/09 - NAS/ubuntu-20.04-desktop-amd64.iso
+> */mnt/myVol/ShareDrive/09 - NAS/ubuntu-20.04-desktop-amd64.iso
 
 ![image](https://user-images.githubusercontent.com/52215012/122659069-acf8d480-d141-11eb-91bc-90157440df0c.png)
 
